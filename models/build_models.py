@@ -408,7 +408,7 @@ class UKAN(nn.Module):
         self.decoder4 = D_ConvLayer(embed_dims[0] // 4, embed_dims[0] // 8)
         self.decoder5 = D_ConvLayer(embed_dims[0] // 8, embed_dims[0] // 8)
 
-        self.final = nn.Conv2d(embed_dims[0] // 8, num_classes, kernel_size=1)
+        self.head = nn.Conv2d(embed_dims[0] // 8, num_classes, kernel_size=1)
         self.soft = nn.Softmax(dim=1)
 
     def forward(self, x):
@@ -474,7 +474,7 @@ class UKAN(nn.Module):
         out = torch.add(out, t1)
         out = F.relu(F.interpolate(self.decoder5(out), scale_factor=(2, 2), mode='bilinear'))
 
-        return self.final(out)
+        return self.head(out)
 
 
 class UMLP(nn.Module):
@@ -531,7 +531,7 @@ class UMLP(nn.Module):
         self.decoder4 = D_ConvLayer(embed_dims[0] // 4, embed_dims[0] // 8)
         self.decoder5 = D_ConvLayer(embed_dims[0] // 8, embed_dims[0] // 8)
 
-        self.final = nn.Conv2d(embed_dims[0] // 8, num_classes, kernel_size=1)
+        self.head = nn.Conv2d(embed_dims[0] // 8, num_classes, kernel_size=1)
         self.soft = nn.Softmax(dim=1)
 
     def forward(self, x):
@@ -597,7 +597,7 @@ class UMLP(nn.Module):
         out = torch.add(out, t1)
         out = F.relu(F.interpolate(self.decoder5(out), scale_factor=(2, 2), mode='bilinear'))
 
-        return self.final(out)
+        return self.head(out)
 
 
 @register_model
