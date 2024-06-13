@@ -81,7 +81,7 @@ CUDA_VISIBLE_DEVICES=1,3 python -m torch.distributed.run --nproc_per_node=2 trai
 
 ### train model with multi-machine multi-GPU:
 For the specific number of GPUs on each machine, modify the value of ___--nproc_per_node___.  
-If you want to specify a certain GPU, just add ___CUDA_VISIBLE_DEVICES=X___ to specify the index number of the GPU before each command.  
+If you want to specify a certain GPU, just add ___CUDA_VISIBLE_DEVICES=___ to specify the index number of the GPU before each command.  
 The principle is the same as single-machine multi-GPU training:  
 ```
 On the first machine: python -m torch.distributed.run --nproc_per_node=1 --nnodes=2 --node_rank=0 --master_addr=<Master node IP address> --master_port=<Master node port number> train_gpu.py
