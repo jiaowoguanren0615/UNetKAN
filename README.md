@@ -1,6 +1,7 @@
 <h1 align='center'>UNetKAN</h1>
 
-### This is a warehouse for UNetKAN-Pytorch-model, can be used to train your medical-image-datasets for segmentation tasks.(Model evaluation code will upload soon)  
+### This is a warehouse for UNetKAN-Pytorch-model, can be used to train your medical-image-datasets for segmentation tasks.
+### Code mainly from [official source code](https://github.com/CUHK-AIM-Group/U-KAN)  
 
 ### [KAN: Kolmogorov–Arnold Networks](https://arxiv.org/abs/2404.19756)  
 ### [U-KANMakesStrong Backbone for Medical Image Segmentation and Generation](https://arxiv.org/abs/2406.02918)
