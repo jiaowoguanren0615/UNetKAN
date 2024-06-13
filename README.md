@@ -41,12 +41,7 @@ conda env create -f environment.yml
 ## Precautions
 Before you use the code to train your own data set, please first enter the ___train_gpu.py___ file and modify the ___Kvasir_path___, ___ClinicDB_path___, ___batch_size___, ___num_workers___ and ___nb_classes___ parameters.  
 
-## Use Adafactor Optimizer for training vit-e
-You can use anther optimizer Adafactor, just need to change the optimizer in ___train_gpu.py___.
-![image](https://github.com/jiaowoguanren0615/VisionTransformer/blob/main/sample_png/Adafactor_vit-e.jpg)
-
 ## Train this model
-
 ### Parameters Meaning:
 ```
 1. nproc_per_node: <The number of GPUs you want to use on each node (machine/server)>
