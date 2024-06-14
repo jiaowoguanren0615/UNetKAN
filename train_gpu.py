@@ -345,11 +345,16 @@ def main(args):
             print('*********No improving mIOU, No saving checkpoint*********')
 
     if args.predict and utils.is_main_process():
+        model_pred = create_model(
+            args.model,
+            num_classes=args.nb_classes,
+            args=args
+        )
         print('*******************STARTING PREDICT*******************')
         weights_path = f'./{args.save_weights_dir}/{args.model}_best_model.pth'
         img_path = "/mnt/d/MedicalSeg/CVC-ClinicDB/Original/1.png"
         roi_mask_path = "/mnt/d/MedicalSeg/CVC-ClinicDB/Ground Truth/1.png"
-        run_pred(args, weights_path, img_path, roi_mask_path)
+        run_pred(args, model_pred, weights_path, img_path, roi_mask_path)
 
 
 

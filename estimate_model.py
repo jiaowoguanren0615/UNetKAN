@@ -26,7 +26,7 @@ def predictor(model, img, mask, device):
     return prediction
 
 
-def run_pred(args, weights_path, img_path, roi_mask_path):
+def run_pred(args, model, weights_path, img_path, roi_mask_path):
     assert os.path.exists(weights_path), f"weights {weights_path} not found."
     assert os.path.exists(img_path), f"image {img_path} not found."
     assert os.path.exists(roi_mask_path), f"image {roi_mask_path} not found."
@@ -37,9 +37,6 @@ def run_pred(args, weights_path, img_path, roi_mask_path):
     # get devices
     device = args.device
     print("using {} device.".format(device))
-
-    # create model
-    model = UKAN_large(num_classes=args.nb_classes)
 
     # load weights
     model.load_state_dict(torch.load(weights_path, map_location='cpu')['model_state'])
