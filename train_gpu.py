@@ -27,6 +27,8 @@ from scheduler import create_scheduler
 
 from engine import train_one_epoch, evaluate
 
+from estimate_model import run_pred
+
 
 def get_args_parser():
     parser = argparse.ArgumentParser(
@@ -37,6 +39,7 @@ def get_args_parser():
                         help="path to Kvasir Dataset")
     parser.add_argument("--ClinicDB_path", type=str, default='/mnt/d/MedicalSeg/CVC-ClinicDB/',
                         help="path to CVC-ClinicDBDataset")
+    parser.add_argument('--predict', default=False, type=bool, help='Estimate Your model')
     parser.add_argument("--img_size", type=int, default=256, help="input size")
     parser.add_argument("--ignore_label", type=int, default=255, help="the dataset ignore_label")
     parser.add_argument("--ignore_index", type=int, default=255, help="the dataset ignore_index")
@@ -50,8 +53,6 @@ def get_args_parser():
     parser.add_argument('--epochs', default=5, type=int)
     parser.add_argument("--train_print_freq", type=int, default=50)
     parser.add_argument("--val_print_freq", type=int, default=100)
-
-    parser.add_argument('--predict', default=False, type=bool, help='Estimate Your model')
 
     # Model parameters
     parser.add_argument('--model', default='UKAN_large', type=str, metavar='MODEL',
@@ -344,14 +345,11 @@ def main(args):
             print('*********No improving mIOU, No saving checkpoint*********')
 
     if args.predict and utils.is_main_process():
-        model_predict = create_model(
-            args.model,
-            num_classes=args.nb_classes,
-            args=args
-        )
-
-        model_predict.to(device)
         print('*******************STARTING PREDICT*******************')
+        weights_path = f'./{args.save_weights_dir}/{args.model}_best_model.pth'
+        img_path = "/mnt/d/MedicalSeg/CVC-ClinicDB/Original/1.png"
+        roi_mask_path = "/mnt/d/MedicalSeg/CVC-ClinicDB/Ground Truth/1.png"
+        run_pred(args, weights_path, img_path, roi_mask_path)
 
 
 
