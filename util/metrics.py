@@ -15,7 +15,7 @@ class Metrics:
         self.hist = torch.zeros(num_classes, num_classes).to(device)
 
     def update(self, pred: Tensor, target: Tensor) -> None:
-        pred = pred.argmax(dim=1).flatten()
+        pred = pred.argmax(1).flatten()
         keep = target != self.ignore_label
         self.hist += torch.bincount(target[keep] * self.num_classes + pred[keep], minlength=self.num_classes**2).view(self.num_classes, self.num_classes)
 

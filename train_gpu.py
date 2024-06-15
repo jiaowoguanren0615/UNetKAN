@@ -153,9 +153,9 @@ def get_args_parser():
     return parser
 
 
+
 def main(args):
     print(args)
-
     utils.init_distributed_mode(args)
 
     if args.local_rank == 0:
@@ -205,8 +205,8 @@ def main(args):
         model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu], find_unused_parameters=True)
         model_without_ddp = model.module
     n_parameters = sum([p.numel() for p in model.parameters() if p.requires_grad])
-    print('********ESTABLISH ARCHITECTURE********\n')
-    print(f'Model: {args.model}\nNumber of parameters: {n_parameters}\n')
+    print('\n********ESTABLISH ARCHITECTURE********')
+    print(f'Model: {args.model}\nNumber of parameters: {n_parameters}')
     print('**************************************\n')
 
 
@@ -278,17 +278,17 @@ def main(args):
 
     if args.eval:
         # util.replace_batchnorm(model) # Users may choose whether to merge Conv-BN layers during eval
-        print(f"Evaluating model: {args.model}\n")
+        print(f"Evaluating model: {args.model}")
         confmat, metric = evaluate(args, model, valloader, device, args.val_print_freq)
+        mean_iou = confmat.compute()[2].mean().item() * 100
+        mean_iou = round(mean_iou, 2)
         all_f1, mean_f1 = metric.compute_f1()
         all_acc, mean_acc = metric.compute_pixel_acc()
-        print(f"val_meanF1: {mean_f1}\nval_meanACC: {mean_acc}\n")
+        print(f"**val_meanF1: {mean_f1}\n**val_meanACC: {mean_acc}\n**val_mIOU: {mean_iou}")
 
     print(f"Start training for {args.epochs} epochs")
 
-
     for epoch in range(args.epochs):
-
         if args.distributed:
             trainloader.sampler.set_epoch(epoch)
 
@@ -297,12 +297,11 @@ def main(args):
                                         loss_scaler, writer, args)
 
         confmat, metric = evaluate(args, model, valloader, device, args.val_print_freq, writer)
-        # mae_info, f1_info = mae_metric.compute(), f1_metric.compute()
         mean_iou = confmat.compute()[2].mean().item() * 100
         mean_iou = round(mean_iou, 2)
         all_f1, mean_f1 = metric.compute_f1()
         all_acc, mean_acc = metric.compute_pixel_acc()
-        print(f"**Val_meanF1: {mean_f1}\n**Val_meanACC: {mean_acc}\n**Val_mIOU: {mean_iou}\n")
+        print(f"**Val_meanF1: {mean_f1}\n**Val_meanACC: {mean_acc}\n**Val_mIOU: {mean_iou}")
 
         lr_scheduler.step(epoch)
 
@@ -339,8 +338,8 @@ def main(args):
                     "scaler": loss_scaler.state_dict()
                 }
                 torch.save(checkpoint_save, f'{args.save_weights_dir}/{args.model}_best_model.pth')
-                print('******************Save Checkpoint******************\n')
-                print(f'Save weights to {args.save_weights_dir}/{args.model}_best_model.pth')
+                print('******************Save Checkpoint******************')
+                print(f'Save weights to {args.save_weights_dir}/{args.model}_best_model.pth\n')
         else:
             print('*********No improving mIOU, No saving checkpoint*********')
 
