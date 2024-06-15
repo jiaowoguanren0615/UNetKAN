@@ -89,6 +89,23 @@ On the first machine: python -m torch.distributed.run --nproc_per_node=1 --nnode
 On the second machine: python -m torch.distributed.run --nproc_per_node=1 --nnodes=2 --node_rank=1 --master_addr=<Master node IP address> --master_port=<Master node port number> train_gpu.py
 ```
 
+## ONNX deployment
+### step 1: ONNX export
+```bash
+python onnx_export.py
+```
+
+### step2: ONNX optimise
+```bash
+python onnx_optimise.py
+```
+
+### step3: ONNX validate
+```bash
+python onnx_validate.py
+```
+
+
 ## Citation
 ```
 @article{li2024ukan,
