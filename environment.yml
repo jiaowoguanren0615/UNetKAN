@@ -3,6 +3,9 @@ dependencies:
   - python=3.9
   - pip
   - pip:
+      - onnx==1.13
+      - onnxoptimizer==0.3.13
+      - onnxruntime==1.18
       - matplotlib==3.5.1
       - numpy==1.23.0
       - opencv-contrib-python==4.7.0.72
