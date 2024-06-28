@@ -6,7 +6,7 @@
 ### [KAN: Kolmogorov–Arnold Networks](https://arxiv.org/abs/2404.19756)  
 ### [U-KANMakesStrong Backbone for Medical Image Segmentation and Generation](https://arxiv.org/abs/2406.02918)
 
-![image](https://github.com/CUHK-AIM-Group/U-KAN/blob/main/assets/framework-1.png)  
+![image](https://github.com/CUHK-AIM-Group/U-KAN/blob/main/assets/framework-1.jpg)  
 
 ## Preparation
 ### Create conda virtual-environment
